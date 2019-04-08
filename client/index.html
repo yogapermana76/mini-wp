@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="google-signin-client_id"
+    content="308862486825-7nsi5oiugps75dqgaopdas5jbu39d2o5.apps.googleusercontent.com">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <!-- include libraries(jQuery, bootstrap) -->
+  <!-- <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> -->
+  <!-- include summernote css/js -->
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css" rel="stylesheet">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.js"></script>
+  <title>Mini Wordpress</title>
+</head>
+
+<body>
+
+  <div class="container-fluid">
+    <!-- nav-bar -->
+    <div class="row shadow-lg text-light header d-flex align-items-center text-center">
+      <div class=" col-md-2 py-4 logo">
+        <i class="fab fa-wordpress"></i> Mini Wordpress
+      </div>
+      <div class="col-md-2 py-3">
+        <i class="far fa-credit-card"></i> Reader
+      </div>
+      <div class="col-md-5 py-3"></div>
+      <div class="col-md-1 py-3">
+        <span class="btn btn-sm btn-light"><i class="fas fa-edit"></i> write</span>
+      </div>
+      <div class="col-md-2">
+        <div class="row">
+          <div class="col-md-6 py-3" style="font-size: 25px">
+            <i class="fas fa-user-circle"></i>
+          </div>
+          <div class="col-md-6 py-3" style="font-size: 25px">
+            <i class="fas fa-bell"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end nav-bar -->
+
+    <div class="row">
+      <!-- side bar -->
+      <div class="col-3 anyClass">
+        <div class="row">
+          <div class="col-md-12 py-2">
+            <i class="fas fa-desktop"></i> View Site
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12 py-2">
+            <i class="fas fa-desktop"></i> Stats
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12 py-2">
+            <i class="fas fa-history"></i> Activity
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-7 py-2">
+            <i class="fas fa-desktop"></i> Plan
+          </div>
+          <div class="col-md-5 py-2">
+            <span class="float-right">Free</span>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12 py-2">
+            <b>Manages</b>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-7 py-2">
+            <i class="fas fa-align-left"></i> Site Pages
+          </div>
+          <div class="col-md-5 py-2">
+            <div class="btn btn-sm btn-outline-dark float-right">add</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-7 py-2">
+            <i class="far fa-keyboard"></i> Blog Posts
+          </div>
+          <div class="col-md-5 py-2">
+            <div class="btn btn-sm btn-outline-dark float-right">add</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-7 py-2">
+            <i class="fas fa-image"></i> Media
+          </div>
+          <div class="col-md-5 py-2">
+            <div class="btn btn-sm btn-outline-dark float-right">add</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12 py-2">
+            <i class="fas fa-comments"></i> Comments
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-7 py-2">
+            <i class="fas fa-retweet"></i> Feedback
+          </div>
+          <div class="col-md-5 py-2">
+            <div class="btn btn-sm btn-outline-dark float-right">add</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-7 py-2">
+            <i class="fas fa-plug"></i> Plugin
+          </div>
+          <div class="col-md-5 py-2">
+            <div class="btn btn-sm btn-outline-dark float-right">Manage</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12 py-2">
+            <i class="fas fa-cloud-download-alt"></i> Import
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12 py-2">
+            <b>Personalize</b>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-7 py-2">
+            <i class="fas fa-tools"></i> Customize
+          </div>
+          <div class="col-md-5 py-2">
+            <div class="btn btn-sm btn-outline-dark float-right">Themes</div>
+          </div>
+        </div>
+
+      </div>
+      <!-- end side-bar -->
+
+      <!-- main page -->
+      <div class="col-9 content">
+        <div class="row">
+          <div class="container">
+
+            <!-- <form method="post">
+                <textarea id="summernote" name="editordata"></textarea>
+              </form> -->
+
+          </div>
+        </div>
+      </div>
+      <!-- end main page -->
+    </div>
+    <!-- all content -->
+
+    <!-- footer -->
+    <footer class="row text-light py-5 footer-top">
+      <div class="col-md-2"></div>
+      <div class="col-md-8">
+        <div class="social">
+          <!-- Facebook -->
+          <a class="fb-ic">
+            <i class="fab fa-facebook-f fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+          </a>
+          <!-- Twitter -->
+          <a class="tw-ic">
+            <i class="fab fa-twitter fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+          </a>
+          <!-- Google +-->
+          <a class="gplus-ic">
+            <i class="fab fa-google-plus-g fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+          </a>
+          <!--Linkedin -->
+          <a class="li-ic">
+            <i class="fab fa-linkedin-in fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+          </a>
+          <!--Instagram-->
+          <a class="ins-ic">
+            <i class="fab fa-instagram fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+          </a>
+          <!--Pinterest-->
+          <a class="pin-ic">
+            <i class="fab fa-pinterest fa-lg white-text fa-2x"> </i>
+          </a>
+        </div>
+      </div>
+      <div class="col-md-2"></div>
+    </footer>
+    <div class="row text-light py-3 footer-bottom">
+      <div class="col text-center">
+        &copy;2019 Copyright: Yoga Permana 
+      </div>
+    </div>
+    <!-- end foooter -->
+
+  </div>
+  <!-- end container -->
+
+</body>
+
+</html>

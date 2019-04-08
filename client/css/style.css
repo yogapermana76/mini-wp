@@ -1,0 +1,37 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.anyClass {
+  height:575px;
+  overflow-y: scroll;
+}
+
+.logo {
+  background-color: black
+}
+
+.header {
+  background-color: #0E6B90
+}
+
+.content {
+  background-color: rgb(200, 200, 207)
+}
+
+/* ---------------------------------------- */
+/* footer */
+.footer-top {
+  background-color: rgb(31, 34, 36);
+}
+
+.social {
+  margin: auto;
+  width: 500px;
+}
+
+.footer-bottom {
+  background-color: rgb(27, 27, 27);
+}
+/* end-footer */
