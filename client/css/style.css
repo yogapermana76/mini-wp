@@ -4,7 +4,7 @@
 }
 
 .anyClass {
-  height:575px;
+  height:580px;
   overflow-y: scroll;
 }
 
@@ -17,7 +17,12 @@
 }
 
 .content {
-  background-color: rgb(200, 200, 207)
+  background-color: rgb(200, 200, 207);
+}
+
+.card {
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 /* ---------------------------------------- */
