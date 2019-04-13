@@ -1,6 +1,8 @@
 const User = require('../models/user')
 const { compare } = require('../helpers/bcrypt')
 const { sign } = require('../helpers/jwt')
+const { OAuth2Client } = require('google-auth-library');
+const client = new OAuth2Client(process.env.CLIENT_ID);
 
 class UserController {
   
@@ -27,9 +29,7 @@ class UserController {
       })
       .then(user => {
         if(user.error) {
-          res.status(401).json({
-            message: 'email alrady exists'
-          })
+          res.status(401).json(user.message)
         } else {
           res.status(201).json(user)
         }
@@ -51,9 +51,7 @@ class UserController {
         } else {
           const verifyPassword = compare(req.body.password, foundUser.password)
           if(!verifyPassword) {
-            res.status(401).json({
-              message: 'password wrong!'
-            })
+            res.status(401).json({ message: 'password wrong!' })
           } else {
             const { id, name, email } = foundUser
             let token = sign({
@@ -74,8 +72,44 @@ class UserController {
       })
   }
 
-  signInGoogle() {
-    
+  static signInGoogle(req, res) {
+    let payload = null
+    client.verifyIdToken({
+      idToken: req.body.id_token,
+      audience: process.env.CLIENT_ID
+    })
+      .then(ticket => {
+        payload = ticket.getPayload();
+        return User.findOne({
+          email: payload.email
+        })
+      })
+      .then(user => {
+        if(!user) {
+          return User.create({
+            email: payload.email,
+            name: payload.name,
+            password: process.env.PASSWORD
+          })
+        } else {
+          return user
+        }
+      })
+      .then(user => {
+        const { id } = user
+        let token = sign({
+          email: payload.email,
+          name: payload.name,
+          password: payload.password
+        }, process.env.SECRET_KEY)
+        res.status(201).json({
+          token,
+          id
+        })
+      })
+      .catch(err => {
+        res.status(500).json({ err: err.message })
+      })
   }
 
   static findAll(req, res) {

@@ -12,6 +12,11 @@
   background-color: black
 }
 
+.login-footer {
+  margin-left: 185px;
+  padding-bottom: 30px;
+}
+
 .header {
   background-color: #0E6B90
 }

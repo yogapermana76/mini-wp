@@ -6,9 +6,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="google-signin-client_id"
-    content="308862486825-7nsi5oiugps75dqgaopdas5jbu39d2o5.apps.googleusercontent.com">
+    content="852773402500-jecq35o83p4nn93gmsh8rikjpsoedb0v.apps.googleusercontent.com">
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/vueWysiwyg.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -20,250 +21,253 @@
 </head>
 
 <body>
+  <div id="app">
 
-  <div class="container-fluid">
-    <!-- nav-bar -->
-    <div class="row shadow-lg text-light header d-flex align-items-center text-center">
-      <div class=" col-md-2 py-4 logo">
-        <i class="fab fa-wordpress"></i> Mini Wordpress
-      </div>
-      <div class="col-md-2 py-3">
-        <i class="far fa-credit-card"></i> Reader
-      </div>
-      <div class="col-md-5 py-3"></div>
-      <div class="col-md-1 py-3">
-        <span class="btn btn-sm btn-light"><i class="fas fa-edit"></i> write</span>
-      </div>
-      <div class="col-md-2">
-        <div class="row">
-          <div class="col-md-6 py-3" style="font-size: 25px">
-            <i class="fas fa-user-circle"></i>
+    <div class="container-fluid">
+      <!-- nav-bar -->
+      <div class="row shadow-lg text-light header d-flex align-items-center text-center">
+        <div class=" col-md-2 py-4 logo">
+          <i class="fab fa-wordpress"></i> Mini Wordpress
+        </div>
+        <div class="col-md-2 py-3">
+          <a>
+          <button class="btn btn-sm btn-light" v-if="isLoggedIn == true">
+            <i class="far fa-credit-card"></i> Reader
+          </button>
+          </a>
+        </div>
+        <div class="col-md-5 py-3"></div>
+        <div class="col-md-1 py-3">
+          <span class="btn btn-sm btn-light" v-if="isLoggedIn == true" v-on:click="isPositon = addArticle"><i
+              class="fas fa-edit"></i> write</span>
+        </div>
+        <div class="col-md-2" v-if="isLoggedIn == false">
+          <div class="row">
+            <div class="col-md-6 py-3" style="font-size: 25px">
+              <button class="btn btn-sm btn-light" data-toggle="modal" data-target="#signup-modal"><i
+                  class="fas fa-user-plus"></i> Signup</button>
+            </div>
+            <div class="col-md-6 py-3" style="font-size: 25px">
+              <button type="button" class="btn btn-sm btn-light" data-toggle="modal" data-target="#login-modal"><i
+                  class="fas fa-sign-in-alt"></i> Login</button>
+            </div>
           </div>
-          <div class="col-md-6 py-3" style="font-size: 25px">
-            <i class="fas fa-bell"></i>
+        </div>
+        <div class="col-md-2" v-if="isLoggedIn == true">
+          <div class="row">
+            <div class="col-md-6 py-3" style="font-size: 25px">
+              <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="col-md-6 py-3" style="font-size: 25px">
+              <button class="btn btn-sm btn-light" v-on:click="signOut">
+                <i class="fas fa-sign-out-alt"></i> Logout
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <!-- end nav-bar -->
+      <!-- end nav-bar -->
 
-    <div class="row">
-      <!-- side bar -->
-      <div class="col-3 anyClass">
-        <div class="row">
-          <div class="col-md-12 py-2">
-            <i class="fas fa-desktop"></i> View Site
+      <div class="row">
+        <!-- side bar -->
+        <div class="col-3 anyClass" v-if="isLoggedIn == true">
+          <div class="row">
+            <div class="col-md-12 py-2">
+              <i class="fas fa-desktop"></i> View Site
+            </div>
           </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-12 py-2">
-            <i class="fas fa-desktop"></i> Stats
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-12 py-2">
-            <i class="fas fa-history"></i> Activity
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-7 py-2">
-            <i class="fas fa-desktop"></i> Plan
-          </div>
-          <div class="col-md-5 py-2">
-            <span class="float-right">Free</span>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-12 py-2">
-            <b>Manages</b>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-7 py-2">
-            <i class="fas fa-align-left"></i> Site Pages
-          </div>
-          <div class="col-md-5 py-2">
-            <div class="btn btn-sm btn-outline-dark float-right">add</div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-7 py-2">
-            <i class="far fa-keyboard"></i> Blog Posts
-          </div>
-          <div class="col-md-5 py-2">
-            <div class="btn btn-sm btn-outline-dark float-right">add</div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-7 py-2">
-            <i class="fas fa-image"></i> Media
-          </div>
-          <div class="col-md-5 py-2">
-            <div class="btn btn-sm btn-outline-dark float-right">add</div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-12 py-2">
-            <i class="fas fa-comments"></i> Comments
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-7 py-2">
-            <i class="fas fa-retweet"></i> Feedback
-          </div>
-          <div class="col-md-5 py-2">
-            <div class="btn btn-sm btn-outline-dark float-right">add</div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-7 py-2">
-            <i class="fas fa-plug"></i> Plugin
-          </div>
-          <div class="col-md-5 py-2">
-            <div class="btn btn-sm btn-outline-dark float-right">Manage</div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-12 py-2">
-            <i class="fas fa-cloud-download-alt"></i> Import
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-12 py-2">
-            <b>Personalize</b>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-7 py-2">
-            <i class="fas fa-tools"></i> Customize
-          </div>
-          <div class="col-md-5 py-2">
-            <div class="btn btn-sm btn-outline-dark float-right">Themes</div>
-          </div>
-        </div>
-
-      </div>
-      <!-- end side-bar -->
-
-      <!-- main page -->
-      <div class="col-9 content anyClass">
-        <div class="container">
 
           <div class="row">
-            <!-- VUE -->
-            <div id="main">
-
-              <!-- search -->
-              <div class="card shadow">
-                <nav class="navbar navbar-light bg-light">
-                  <input class="form-control mr-sm-2" type="search" v-model="search" placeholder="Search" aria-label="Search">
-                </nav>
-              </div>
-              <!-- end search -->
-
-              <!-- input article -->
-              <div class="card shadow" id="input-article">
-                <h5 class="card-header">Add New Article</h5>
-                <div class="card-body">
-                  <form method="POST" v-on:submit.prevent="addArticle">
-                    <div class="form-group">
-                      <label for="title">Title</label>
-                      <input type="text" v-model="title" class="form-control" placeholder="Title">
-                    </div>
-                    <div class="form-group">
-                      <label for="content">Content</label>
-                      <textarea name="" id="" v-model="content" cols="30" rows="10" class="form-control"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                  </form>
-                </div>
-              </div>
-              <!-- end input article -->
-
-              <!-- article -->
-              <div class="card shadow" v-for="article in filterArticles">
-                <div class="card-body row">
-                  <div class="col-md-8">
-                    <h5 class="card-title">{{ article.title }}</h5>
-                    <p class="card-text">{{ article.content }}</p>
-                  </div>
-                  <div class="col-md-2">
-                    <img v-bind:src="article.image" class="img-thumbnail" alt="img">
-                  </div>
-                  <div class="col-md-2">
-                    <button class="btn btn-sm btn-success">update</button>
-                    <button class="btn btn-sm btn-danger" v-on:click="deleteArticle(article._id)">delete</button>
-                  </div>
-                </div>
-              </div>
+            <div class="col-md-12 py-2">
+              <i class="fas fa-desktop"></i> Stats
             </div>
-            <!-- end article -->
-            <!-- END VUE MAIN -->
+          </div>
+
+          <div class="row">
+            <div class="col-md-12 py-2">
+              <i class="fas fa-history"></i> Activity
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-7 py-2">
+              <i class="fas fa-desktop"></i> Plan
+            </div>
+            <div class="col-md-5 py-2">
+              <span class="float-right">Free</span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12 py-2">
+              <b>Manages</b>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-7 py-2">
+              <i class="fas fa-align-left"></i> Site Pages
+            </div>
+            <div class="col-md-5 py-2">
+              <div class="btn btn-sm btn-outline-dark float-right">add</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-7 py-2">
+              <i class="far fa-keyboard"></i> Blog Posts
+            </div>
+            <div class="col-md-5 py-2">
+              <div class="btn btn-sm btn-outline-dark float-right">add</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-7 py-2">
+              <i class="fas fa-image"></i> Media
+            </div>
+            <div class="col-md-5 py-2">
+              <div class="btn btn-sm btn-outline-dark float-right">add</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12 py-2">
+              <i class="fas fa-comments"></i> Comments
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-7 py-2">
+              <i class="fas fa-retweet"></i> Feedback
+            </div>
+            <div class="col-md-5 py-2">
+              <div class="btn btn-sm btn-outline-dark float-right">add</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-7 py-2">
+              <i class="fas fa-plug"></i> Plugin
+            </div>
+            <div class="col-md-5 py-2">
+              <div class="btn btn-sm btn-outline-dark float-right">Manage</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12 py-2">
+              <i class="fas fa-cloud-download-alt"></i> Import
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12 py-2">
+              <b>Personalize</b>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-7 py-2">
+              <i class="fas fa-tools"></i> Customize
+            </div>
+            <div class="col-md-5 py-2">
+              <div class="btn btn-sm btn-outline-dark float-right">Themes</div>
+            </div>
           </div>
 
         </div>
-      </div>
-      <!-- end main page -->
-    </div>
-    <!-- all content -->
+        <!-- end side-bar -->
 
-    <!-- footer -->
-    <footer class="row text-light py-5 footer-top">
-      <div class="col-md-2"></div>
-      <div class="col-md-8">
-        <div class="social">
-          <!-- Facebook -->
-          <a class="fb-ic">
-            <i class="fab fa-facebook-f fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
-          </a>
-          <!-- Twitter -->
-          <a class="tw-ic">
-            <i class="fab fa-twitter fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
-          </a>
-          <!-- Google +-->
-          <a class="gplus-ic">
-            <i class="fab fa-google-plus-g fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
-          </a>
-          <!--Linkedin -->
-          <a class="li-ic">
-            <i class="fab fa-linkedin-in fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
-          </a>
-          <!--Instagram-->
-          <a class="ins-ic">
-            <i class="fab fa-instagram fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
-          </a>
-          <!--Pinterest-->
-          <a class="pin-ic">
-            <i class="fab fa-pinterest fa-lg white-text fa-2x"> </i>
-          </a>
+        <!-- main page -->
+        <div class="col-9 content anyClass" v-if="isLoggedIn == true">
+          <div class="container">
+
+            <div class="row">
+              <div>
+                <!-- search -->
+                <div class="card shadow">
+                  <nav class="navbar navbar-light bg-light">
+                    <input class="form-control mr-sm-2" type="search" v-model="search" placeholder="Search"
+                      aria-label="Search">
+                  </nav>
+                </div>
+                <!-- end search -->
+
+                <!-- input article -->
+                <div class="card shadow" id="input-article" v-if="isPositon == addArticle">
+                  <h5 class="card-header">Add New Article</h5>
+                  <div class="card-body">
+                    <form method="POST" v-on:submit.prevent="addArticle">
+                      <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" v-model="title" class="form-control" placeholder="Title">
+                      </div>
+                      <div class="form-group">
+                        <label for="content">Content</label>
+                        <wysiwyg v-model="text" />
+                        <!-- <textarea name="" v-model="content" cols="30" rows="10" class="form-control"></textarea> -->
+                      </div>
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                  </div>
+                </div>
+                <!-- end input article -->
+
+                <!-- article -->
+                <div class="card shadow" v-for="article in filterArticles">
+                  <div class="card-body row">
+                    <div class="col-md-8">
+                      <h5 class="card-title">{{ article.title }}</h5>
+                      <p class="card-text" v-html="article.content" ></p>
+                    </div>
+                    <div class="col-md-2">
+                      <img v-bind:src="article.image" class="img-thumbnail" alt="img">
+                    </div>
+                    <div class="col-md-2">
+                      <button class="btn btn-sm btn-success">update</button>
+                      <button class="btn btn-sm btn-danger" v-on:click="deleteArticle(article._id)">delete</button>
+                    </div>
+                  </div>
+                </div>
+                <!-- end article -->
+              </div>
+            </div>
+            <!-- end row main -->
+          </div>
+          <!-- end container -->
         </div>
+        <!-- end main page -->
       </div>
-      <div class="col-md-2"></div>
-    </footer>
-    <div class="row text-light py-3 footer-bottom">
-      <div class="col text-center">
-        &copy;2019 Copyright Yoga Permana 
-      </div>
-    </div>
-    <!-- end foooter -->
+      <!-- all content -->
 
+      <!-- register modal -->
+      <register-modal></register-modal>
+      <!-- end register modal -->
+
+      <!-- login modal -->
+      <login-modal v-on:success-login="isLoggedIn = true"></login-modal>
+      <!-- end login modal -->
+
+      <!-- footer -->
+      <footer-wp></footer-wp>
+      <!-- end foooter -->
+    </div>
+    <!-- end container -->
   </div>
-  <!-- end container -->
+
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <!-- components -->
+  <script src="./js/vueWysiwyg.js"></script>
+  <script src="./js/components/footer-wp.js"></script>
+  <script src="./js/components/login-modal.js"></script>
+  <script src="./js/components/register-modal.js"></script>
   <script src="./js/index.js"></script>
 </body>
 

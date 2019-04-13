@@ -1,7 +1,7 @@
 const url = 'http://localhost:3000'
 
 new Vue({
-  el: '#main',
+  el: '#app',
   data: {
     articles: [],
     title: '',
@@ -10,10 +10,20 @@ new Vue({
     search: '',
     name: '',
     email: '',
-    password: ''
+    password: '',
+    isLoggedIn: false,
+    isPositon: '',
+    text: ''
   },
   created() {
-    axios
+    this.getAllArticle()
+    if(localStorage.getItem('token')) {
+      this.isLoggedIn = true
+    }
+  },
+  methods: {
+    getAllArticle() {
+      axios
       .get(`${url}/articles`)
       .then(({ data }) => {
         this.articles = data
@@ -21,40 +31,41 @@ new Vue({
       .catch(err => {
         console.log(err)
       })
-  },
-  methods: {
-    register() {
+    },
+    onSignIn(googleUser) {
+      const profile = googleUser.getBasicProfile();
+      console.log('ID: ' + profile.getId());
+      console.log('Name: ' + profile.getName());
+      console.log('Image URL: ' + profile.getImageUrl());
+      console.log('Email: ' + profile.getEmail());
+      const id_token = googleUser.getAuthResponse().id_token;
+
       axios
-        .post(`${url}/users`, {
-          name: this.name,
-          email: this.email,
-          password: this.password
+        .post(`${url}/users/login/google`, {
+          id_token
         })
           .then(user => {
-            console.log('successfull register')
+            localStorage.setItem('token', user.token)
+            localStorage.setItem('id', user.id)
+            localStorage.setItem('login', 'google')
           })
           .catch(err => {
-            console.log(err.message)
+            console.log('request failed' , err.message)
           })
     },
-    login() {
-      axios
-        .post(`${url}/users`, {
-          email: this.email,
-          password: this.password
-        })
-          .then(() => {
-            console.log('success login')
-          })
-          .catch(err => {
-            console.log(err.message)
-          })
+    signOut() {
+      const auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+        console.log('User signed out.');
+        localStorage.clear()
+      });
+      this.isLoggedIn = false
     },
     addArticle() {
       axios
         .post(`${url}/articles`, {
           title: this.title,
-          content: this.content,
+          content: this.text,
           image: this.image
         })
           .then(({ data }) => {
@@ -71,12 +82,7 @@ new Vue({
       axios
         .delete(`${url}/articles/${id}`)
           .then(() => {
-            console.log('successfull deleted article')
-            return axios
-              .get(`${url}/articles`)
-          })
-          .then(({ data }) => {
-            this.articles = data
+            this.getAllArticle()
           })
           .catch(err => {
             console.log(err)
@@ -91,7 +97,7 @@ new Vue({
           .catch(err => {
             console.log(err.message)
           })
-    }
+    },
   },
   computed: {
     filterArticles() {
@@ -99,5 +105,8 @@ new Vue({
         return article.title.toLowerCase().match(this.search.toLowerCase())
       })
     }
+  },
+  components: {
+    wysiwyg: vueWysiwyg.default.component,
   }
 })

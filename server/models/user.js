@@ -5,11 +5,13 @@ const { hash } = require('../helpers/bcrypt')
 const userSchema = new Schema({
   name: {
     type: String,
-    required: [true, 'please fill name']
+    required: [true, 'please fill name'],
   },
   email: {
     type: String,
-    required: [true, 'please fill email']
+    required: [true, 'please fill email'],
+    unique: [true, 'email already exists'],
+    match: [/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, `Please fill valid email address`]
   },
   password: {
     type: String,
