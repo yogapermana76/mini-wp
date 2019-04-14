@@ -6,8 +6,8 @@ class ArticleController {
     Article.create({
       title: req.body.title,
       content: req.body.content,
-      image: req.body.image,
-      user_id: req.body.user_id
+      featured_image: req.file.gcsUrl,
+      author: req.body.author
     })
       .then(article => {
         res.status(201).json(article)
@@ -18,8 +18,10 @@ class ArticleController {
   }
 
   static findAllArticle(req, res) {
-    Article.find({})
-      .populate('user_id')
+    Article.find({
+      author: req.params.id
+    })
+      .populate('author')
       .then(articles => {
         res.status(200).json(articles)
       })
@@ -40,8 +42,8 @@ class ArticleController {
 
   static updateArticle(req, res) {
     Article.findByIdAndUpdate(req.params.id, req.body)
-      .then(() => {
-        res.status(201).json('successfull updated')
+      .then(article => {
+        res.status(200).json(article)
       })
       .catch(err => {
         res.status(500).json(err.message)

@@ -10,13 +10,12 @@ const articleSchema = new Schema({
     type: String,
     required: [true, 'please fill content']
   },
-  image: String,
-  createdAt: {
+  featured_image: String,
+  created_at: {
     type: Date,
     default: new Date()
   },
-  updatedAt: Date,
-  user_id: {
+  author: {
     type: Schema.Types.ObjectId,
     ref: 'user'
   }

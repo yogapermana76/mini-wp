@@ -1,15 +1,13 @@
 const { verify } = require('../helpers/jwt')
 
-module.exports = (req, res, next) => {
-  try {
-    const decoded = verify(req.headers.token)
-    req.authenticatedUser = decoded
-    if (req.body.token) {
-      res.status(200).json({ message: 'This user is verified!' })
-    } else {
+module.exports = {
+  authenticate(req, res, next) {
+    try {
+      const decoded = verify(req.headers.token, process.env.SECRET_KEY)
+      req.authenticated = decoded
       next()
+    } catch(err) {
+      res.status(401).json({ type: 'authenticate eror', message: 'you do not have access to this page' })
     }
-  } catch (error) {
-    res.status(401).json({ type: 'AUTHENTICATION ERROR', message: 'You do not have access to this page!' })
   }
 }

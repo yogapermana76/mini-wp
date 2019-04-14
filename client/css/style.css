@@ -12,9 +12,13 @@
   background-color: black
 }
 
-.login-footer {
-  margin-left: 185px;
+.footer-modal {
+  margin: auto;
   padding-bottom: 30px;
+}
+
+.g-signin2 {
+  margin-left: 7px
 }
 
 .header {

@@ -54,13 +54,11 @@ Vue.component('loginModal', {
             <form>
               <div class="form-group">
                 <label class="col-form-label">Email:</label>
-                <input type="text" v-model="email" class="form-control" name="email" placeholder="Email" required
-                  id="login-email">
+                <input type="text" v-model="email" class="form-control" name="email" placeholder="Email" required>
               </div>
               <div class="form-group">
                 <label class="col-form-label">Password:</label>
-                <input type="password" v-model="password" class="form-control" name="password" placeholder="Password"
-                  required id="login-password">
+                <input type="password" v-model="password" class="form-control" name="password" placeholder="Password" required>
               </div>
             </form>
           </div>
@@ -68,7 +66,7 @@ Vue.component('loginModal', {
             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
             <button type="submit" class="btn btn-success" data-dismiss="modal" v-on:click="login">Login</button>
           </div>
-          <div class="login-footer">
+          <div class="footer-modal">
             Login With Google?
             <div class="g-signin2" data-onsuccess="onSignIn"></div>
           </div>

@@ -51,18 +51,15 @@ Vue.component('register-modal', {
             <form>
               <div class="form-group">
                 <label class="col-form-label">Name:</label>
-                <input type="text" v-model="name" class="form-control" name="name" placeholder="Name" id="reg-name"
-                  required>
+                <input type="text" v-model="name" class="form-control" name="name" placeholder="Name" required>
               </div>
               <div class="form-group">
                 <label class="col-form-label">Email:</label>
-                <input type="text" v-model="email" class="form-control" name="email" placeholder="Email"
-                  id="reg-email" required>
+                <input type="text" v-model="email" class="form-control" name="email" placeholder="Email" required>
               </div>
               <div class="form-group">
                 <label class="col-form-label">Password:</label>
-                <input type="password" v-model="password" class="form-control" name="password" placeholder="Password"
-                  id="reg-password" required>
+                <input type="password" v-model="password" class="form-control" name="password" placeholder="Password" required>
               </div>
             </form>
           </div>
@@ -70,9 +67,8 @@ Vue.component('register-modal', {
             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-success" data-dismiss="modal" v-on:click="signup">Sign Up</button>
           </div>
-          <div class="register-footer">
-            <p>Sudah punya akun? <br> silahkan <a href="#" data-toggle="modal" data-target="#login-modal"
-                id="ask-login">login</a></p>
+          <div class="register-footer text-center">
+            <p>Sudah punya akun? <br> silahkan <a href="#" data-toggle="modal" data-target="#login-modal" data-dismiss="modal">login</a></p>
           </div>
         </div>
       </div>

@@ -4,27 +4,28 @@ new Vue({
   el: '#app',
   data: {
     articles: [],
-    title: '',
-    content: '',
-    image: '',
     search: '',
-    name: '',
-    email: '',
-    password: '',
     isLoggedIn: false,
-    isPositon: '',
-    text: ''
+    isPosition: '',
+    updateId: '',
+    updateTitle: '',
+    updateContent: ''
   },
   created() {
-    this.getAllArticle()
+    this.isPosition = 'list'
     if(localStorage.getItem('token')) {
       this.isLoggedIn = true
+      this.getAllArticle()
     }
   },
   methods: {
     getAllArticle() {
       axios
-      .get(`${url}/articles`)
+      .get(`${url}/articles/${localStorage.getItem('id')}`, {
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
       .then(({ data }) => {
         this.articles = data
       })
@@ -53,51 +54,47 @@ new Vue({
             console.log('request failed' , err.message)
           })
     },
-    signOut() {
-      const auth2 = gapi.auth2.getAuthInstance();
-      auth2.signOut().then(function () {
-        console.log('User signed out.');
-        localStorage.clear()
-      });
-      this.isLoggedIn = false
-    },
-    addArticle() {
-      axios
-        .post(`${url}/articles`, {
-          title: this.title,
-          content: this.text,
-          image: this.image
-        })
-          .then(({ data }) => {
-            this.articles.push(data)
-            this.title = ''
-            this.content = ''
-            this.image = ''
-          })
-          .catch(err => {
-            console.log(err)
-          })
+    successLogin() {
+      this.isLoggedIn = true
+      this.getAllArticle(localStorage.getItem('id'))
+      this.isPosition = 'list'
     },
     deleteArticle(id) {
       axios
-        .delete(`${url}/articles/${id}`)
+        .delete(`${url}/articles/${id}`, {
+          headers: {
+            token: localStorage.getItem('token')
+          }
+        })
           .then(() => {
-            this.getAllArticle()
+            this.getAllArticle(localStorage.getItem('id'))
           })
           .catch(err => {
             console.log(err)
           })
     },
-    updateArticle(id) {
+    getUpdateDetail(id, title, content) {
+      this.updateId = id
+      this.updateTitle = title
+      this.updateContent = content
+    },
+    updateArticle(id, title, content) {
       axios
-        .put(`${url}/articles/${id}`, {})
+        .put(`${url}/articles/${id}`, {
+          title: title,
+          content: content
+        }, {
+          headers: {
+            token: localStorage.getItem('token')
+          }
+        })
           .then(() => {
             console.log('successfull updated')
           })
           .catch(err => {
             console.log(err.message)
           })
-    },
+    }
   },
   computed: {
     filterArticles() {
@@ -105,8 +102,7 @@ new Vue({
         return article.title.toLowerCase().match(this.search.toLowerCase())
       })
     }
-  },
-  components: {
-    wysiwyg: vueWysiwyg.default.component,
   }
 })
+
+AOS.init();
