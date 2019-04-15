@@ -13,7 +13,7 @@ new Vue({
   },
   created() {
     this.isPosition = 'list'
-    if(localStorage.getItem('token')) {
+    if (localStorage.getItem('token')) {
       this.isLoggedIn = true
       this.getAllArticle()
     }
@@ -21,17 +21,17 @@ new Vue({
   methods: {
     getAllArticle() {
       axios
-      .get(`${url}/articles/${localStorage.getItem('id')}`, {
-        headers: {
-          token: localStorage.getItem('token')
-        }
-      })
-      .then(({ data }) => {
-        this.articles = data
-      })
-      .catch(err => {
-        console.log(err)
-      })
+        .get(`${url}/articles/${localStorage.getItem('id')}`, {
+          headers: {
+            token: localStorage.getItem('token')
+          }
+        })
+        .then(({ data }) => {
+          this.articles = data
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
     onSignIn(googleUser) {
       const profile = googleUser.getBasicProfile();
@@ -45,14 +45,14 @@ new Vue({
         .post(`${url}/users/login/google`, {
           id_token
         })
-          .then(user => {
-            localStorage.setItem('token', user.token)
-            localStorage.setItem('id', user.id)
-            localStorage.setItem('login', 'google')
-          })
-          .catch(err => {
-            console.log('request failed' , err.message)
-          })
+        .then(user => {
+          localStorage.setItem('token', user.token)
+          localStorage.setItem('id', user.id)
+          localStorage.setItem('login', 'google')
+        })
+        .catch(err => {
+          console.log('request failed', err.message)
+        })
     },
     successLogin() {
       this.isLoggedIn = true
@@ -60,18 +60,34 @@ new Vue({
       this.isPosition = 'list'
     },
     deleteArticle(id) {
-      axios
-        .delete(`${url}/articles/${id}`, {
-          headers: {
-            token: localStorage.getItem('token')
+      swal({
+        title: "Are you sure Delete?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+        .then((willDelete) => {
+          if (willDelete) {
+            axios
+              .delete(`${url}/articles/${id}`, {
+                headers: {
+                  token: localStorage.getItem('token')
+                }
+              })
+              .then(() => {
+                swal({
+                  title: 'Success Deleted',
+                  text: "You clicked the button!",
+                  icon: "success",
+                  button: "close!",
+                });
+                this.getAllArticle(localStorage.getItem('id'))
+              })
+              .catch(err => {
+                console.log(err)
+              })
           }
         })
-          .then(() => {
-            this.getAllArticle(localStorage.getItem('id'))
-          })
-          .catch(err => {
-            console.log(err)
-          })
     },
     getUpdateDetail(id, title, content) {
       this.updateId = id
@@ -84,16 +100,16 @@ new Vue({
           title: title,
           content: content
         }, {
-          headers: {
-            token: localStorage.getItem('token')
-          }
+            headers: {
+              token: localStorage.getItem('token')
+            }
+          })
+        .then(() => {
+          console.log('successfull updated')
         })
-          .then(() => {
-            console.log('successfull updated')
-          })
-          .catch(err => {
-            console.log(err.message)
-          })
+        .catch(err => {
+          console.log(err.message)
+        })
     }
   },
   computed: {

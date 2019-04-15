@@ -6,14 +6,27 @@ Vue.component('nav-bar', {
       // auth2.signOut().then(function () {
       //   console.log('User signed out.');
       // });
-      localStorage.clear()
       swal({
-        title: 'Success Logout',
-        text: "You clicked the button!",
-        icon: "success",
-        button: "close!",
-      });
-      this.$emit('success-logout')
+        title: "Are you sure Logout?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+          swal("Poof! Your imaginary file has been deleted!", {
+            icon: "success",
+          });
+          localStorage.clear()
+          this.$emit('success-logout')
+          swal({
+              title: 'Success Logout',
+              text: "You clicked the button!",
+            icon: "success",
+            button: "close!",
+          });
+        }
+      })
     },
   },
   template: `
