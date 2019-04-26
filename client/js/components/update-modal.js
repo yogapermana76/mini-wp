@@ -1,21 +1,26 @@
 Vue.component('update-modal', {
-  props: ['id', 'title', 'text'],
+  props: ['id', 'title', 'text', 'image'],
+  data() {
+    return {
+      updateTitle: this.title,
+      updateText: this.text,
+      updateFeaturedImage: null
+    }
+  },
+
+  watch: {
+    text: function () {
+      this.updateTitle = this.title
+      this.updateText = this.text
+    }
+  },
   methods: {
     update() {
-      this.$emit('process-update', this.id, this.title, this.text)
-      // axios
-      //   .put(`${url}/articles/id`, {
-      //     title: this.title,
-      //     content: this.content,
-      //     featured_image: this.featured_image,
-      //   })
-      //     .then(() => {
-      //       console.log('successfull updated')
-      //     })
-      //     .catch(err => {
-      //       console.log(err.message)
-      //     })
+      this.$emit('process-update', this.id, this.updateTitle, this.updateText, this.updateFeaturedImage)
     },
+    getImage(event) {
+      this.updateFeaturedImage = event.target.files[0]
+    }
   },
   template: `
     <div class="modal fade" id="update-modal" tabindex="-1" role="dialog"
@@ -31,15 +36,15 @@ Vue.component('update-modal', {
           <div class="modal-body">
             <form>
               <div class="form-group">
-                <input type="file" class="form-control-file">
+                <input type="file" class="form-control-file" v-on:change="getImage">
               </div>
               <div class="form-group">
                 <label for="title">Title</label>
-                <input type="text" v-model="title" class="form-control" placeholder="Title">
+                <input type="text" v-model="updateTitle" class="form-control" placeholder="Title">
               </div>
               <div class="form-group">
                 <label for="content">Content</label>
-                <wysiwyg v-model="text" />
+                <wysiwyg v-model="updateText" />
               </div>
             </form>
           </div>

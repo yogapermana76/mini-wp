@@ -17,6 +17,6 @@ router.use(authenticate)
 router.get('/:id', ArticleController.findAllArticle)
 router.post('/', multer.single('featured_image'), gcsMiddlewares.sendUploadToGCS, ArticleController.addArticle)
 router.delete('/:id', authorization, ArticleController.deleteArticle)
-router.put('/:id', authorization, ArticleController.updateArticle)
+router.put('/:id', authorization, multer.single('featured_image'), gcsMiddlewares.sendUploadToGCS, ArticleController.updateArticle)
 
 module.exports = router

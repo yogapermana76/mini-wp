@@ -37,7 +37,37 @@ Vue.component('loginModal', {
               button: "close!",
             });
           })
-    }
+    },
+    onSignIn(googleUser) {
+      console.log('masuk')
+      const profile = googleUser.getBasicProfile();
+      console.log('ID: ' + profile.getId());
+      console.log('Name: ' + profile.getName());
+      console.log('Image URL: ' + profile.getImageUrl());
+      console.log('Email: ' + profile.getEmail());
+      const id_token = googleUser.getAuthResponse().id_token;
+
+      axios
+        .post(`${url}/users/login/google`, {
+          id_token
+        })
+        .then(user => {
+          localStorage.setItem('token', user.token)
+          localStorage.setItem('id', user.id)
+          localStorage.setItem('login', 'google')
+          this.$emit('success-login')
+        })
+        .catch(err => {
+          console.log('request failed', err.message)
+        })
+    },
+  },
+  mounted() {
+    gapi.signin2.render('google-signin-button', {
+      onsuccess: function () {
+        console.log('assd')
+      }
+    })
   },
   template: `
     <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -68,7 +98,7 @@ Vue.component('loginModal', {
           </div>
           <div class="footer-modal">
             Login With Google?
-            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+            <div class="g-signin2" data-onsuccess="onSignIn" id="google-signin-button"></div>
           </div>
         </div>
       </div>

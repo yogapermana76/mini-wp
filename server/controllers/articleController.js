@@ -41,7 +41,11 @@ class ArticleController {
   }
 
   static updateArticle(req, res) {
-    Article.findByIdAndUpdate(req.params.id, req.body)
+    Article.findByIdAndUpdate(req.params.id, {
+      title: req.body.title,
+      content: req.body.content,
+      featured_image: req.file.gcsUrl
+    })
       .then(article => {
         res.status(200).json(article)
       })

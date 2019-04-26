@@ -5,7 +5,7 @@ const port = 3000
 const routes = require('./routes')
 const cors = require('cors')
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/mini-wp', { useNewUrlParser: true });
+mongoose.connect(`mongodb+srv://${process.env.username}:${process.env.password}@cluster0-y1tro.mongodb.net/mini-wp?retryWrites=true`, { useNewUrlParser: true });
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
